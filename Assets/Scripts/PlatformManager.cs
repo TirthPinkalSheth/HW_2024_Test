@@ -19,12 +19,12 @@ public class PlatformManager : MonoBehaviour
         {
             if (currentPulpit == null)
             {
-                Vector3 spawnPos = new Vector3(doofus.position.x + Random.Range(-10, 10), 0, doofus.position.z + Random.Range(-10, 10));
+                Vector3 spawnPos = new Vector3(doofus.position.x + UnityEngine.Random.Range(-10, 10), 0, doofus.position.z + UnityEngine.Random.Range(-10, 10));
                 currentPulpit = Instantiate(pulpitPrefab, spawnPos, Quaternion.identity);
 
                 // Use the min and max pulpit destroy times from JSON
-                float duration = Random.Range(ConfigManager.doofusDiary.pulpit_data.min_pulpit_destroy_time,
-                                              ConfigManager.doofusDiary.pulpit_data.max_pulpit_destroy_time);
+                float duration = UnityEngine.Random.Range(ConfigManager.doofusDiary.pulpit_data.min_pulpit_destroy_time,
+                                                          ConfigManager.doofusDiary.pulpit_data.max_pulpit_destroy_time);
                 Destroy(currentPulpit, duration);
             }
 

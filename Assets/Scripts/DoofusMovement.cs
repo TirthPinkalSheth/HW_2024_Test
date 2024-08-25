@@ -7,7 +7,6 @@ public class DoofusMovement : MonoBehaviour
 
     void Start()
     {
-        // Load speed from the JSON file
         moveSpeed = ConfigManager.doofusDiary.player_data.speed;
         rb = GetComponent<Rigidbody>();
     }
