@@ -1,22 +1,25 @@
+using System.Diagnostics;
+using System.Security.Cryptography;
 using UnityEngine;
 
 public class DoofusMovement : MonoBehaviour
 {
-    private float moveSpeed;
+    private float speed;
     private Rigidbody rb;
 
     void Start()
     {
-        moveSpeed = ConfigManager.doofusDiary.player_data.speed;
+        speed = ConfigManager.doofusDiary.player_data.speed;
         rb = GetComponent<Rigidbody>();
     }
 
     void Update()
     {
-        float moveX = Input.GetAxis("Horizontal") * moveSpeed * Time.deltaTime;
-        float moveZ = Input.GetAxis("Vertical") * moveSpeed * Time.deltaTime;
+        UnityEngine.Debug.Log(speed);
+        float moveX = Input.GetAxis("Horizontal") * speed * Time.deltaTime;
+        float moveZ = Input.GetAxis("Vertical") * speed * Time.deltaTime;
 
         Vector3 movement = new Vector3(moveX, 0, moveZ);
-        rb.MovePosition(transform.position + movement);
+        transform.Translate(movement);
     }
 }
