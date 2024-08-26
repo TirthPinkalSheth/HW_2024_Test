@@ -7,6 +7,7 @@ public class MainMenu : MonoBehaviour
     public void Play()
     {
         SceneManager.LoadScene("SampleScene");
+        ScoreManager.instance.scoreText.gameObject.SetActive(true);
     }
 
     //Quit Game
@@ -14,5 +15,12 @@ public class MainMenu : MonoBehaviour
     {
         Application.Quit();
         Debug.Log("The Player has Quit the game");
+    }
+    public void Replay()
+    {
+        SceneManager.LoadScene("MainMenu");
+        ScoreManager.instance.ResetScore();
+        ScoreManager.instance.scoreText.gameObject.SetActive(false);
+
     }
 }

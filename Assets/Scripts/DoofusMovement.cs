@@ -1,5 +1,5 @@
-using System.Diagnostics;
-using System.Security.Cryptography;
+
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 public class DoofusMovement : MonoBehaviour
@@ -8,6 +8,7 @@ public class DoofusMovement : MonoBehaviour
     private Rigidbody rb;
     public float fallLimit=-10f;
     public Transform objectToCheck;
+    public GameObject currentPulpit;
     void Start()
     {
         speed = ConfigManager.doofusDiary.player_data.speed;
@@ -31,6 +32,14 @@ public class DoofusMovement : MonoBehaviour
     void LoadNextScene()
     {
         // Load the game over scene
-        SceneManager.LoadScene("MainMenu");
+        SceneManager.LoadScene("GameOver");
+    }
+    private void OnTriggerEnter(Collider other) {
+        if (other.gameObject.CompareTag("Pulpit")){
+            if (currentPulpit!=other.gameObject){
+                currentPulpit=other.gameObject;
+                ScoreManager.instance.AddScore(1);
+            }
+        }
     }
 }
