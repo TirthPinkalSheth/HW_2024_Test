@@ -9,43 +9,41 @@ public class PlatformManager : MonoBehaviour
 
     private GameObject currentPulpit;
     public Vector3 currentPulpitPos;
-    void Awake(){
-        instance=this;
+    void Awake()
+    {
+        instance = this;
     }
     void Start()
     {
-        // Step 1: Spawn the first pulpit at a fixed position
+        // Spawning the first pulpit at a fixed position
         SpawnFirstPulpit();
 
-        // Step 2: Start spawning new pulpits when the previous one is about to be destroyed
+        //new pulpits starts to spawn when the last one is going to be destroyed
         StartCoroutine(SpawnPulpits());
     }
 
-    // Function to spawn the first pulpit at a fixed position
     void SpawnFirstPulpit()
     {
-        // Fixed spawn position for the first pulpit
-        Vector3 spawnPos = new Vector3(0, 0, 0); // Adjust this position if needed
+        // First pulpit always spawn on 0,0,0
+        Vector3 spawnPos = new Vector3(0, 0, 0); 
 
-        // Instantiate the first pulpit at a fixed position
         currentPulpit = Instantiate(pulpitPrefab, spawnPos, Quaternion.identity);
         currentPulpitPos = currentPulpit.transform.position;
         // Random lifetime for the first pulpit
-        float destroyTime = Random.Range(ConfigManager.doofusDiary.pulpit_data.min_pulpit_destroy_time,
-                                                     ConfigManager.doofusDiary.pulpit_data.max_pulpit_destroy_time);
+        float destroyTime = Random.Range(ConfigManager.doofusDiary.pulpit_data.min_pulpit_destroy_time,ConfigManager.doofusDiary.pulpit_data.max_pulpit_destroy_time);
 
-        currentPulpit.GetComponent<TimerUI>().timer=destroyTime;
+        currentPulpit.GetComponent<TimerUI>().timer = destroyTime;
         // Destroy the first pulpit after a random time
         StartCoroutine(DestroyRoutine(currentPulpit, destroyTime));
     }
 
-    // Coroutine to spawn new pulpits after the first one is destroyed
+    // Spawn new pulpits after the first one is destroyed
     IEnumerator SpawnPulpits()
     {
         while (true)
         {
             Debug.Log("Start");
-            // Wait until the current pulpit is destroyed
+            // Wait time
             yield return new WaitForSeconds(ConfigManager.doofusDiary.pulpit_data.pulpit_spawn_time);
 
             // Spawn subsequent pulpits around Doofus
@@ -58,7 +56,7 @@ public class PlatformManager : MonoBehaviour
                 randomZOffset = Random.Range(-1, 1);
                 spawnPos = new Vector3(currentPulpitPos.x + (randomXOffset * 9), 0, currentPulpitPos.z + (randomZOffset * 9));
             }
-            // Instantiate a new pulpit at a random position near Doofus
+            //New pulpit at random pos near doofus
             currentPulpit = Instantiate(pulpitPrefab, spawnPos, Quaternion.identity);
             currentPulpitPos = currentPulpit.transform.position;
             float spawnTimer = 0f;
@@ -70,12 +68,10 @@ public class PlatformManager : MonoBehaviour
                 yield return new WaitForEndOfFrame();
             }
             currentPulpit.transform.localScale = new Vector3(9, 1, 9);
-            // Random lifetime for the new pulpit
-            float destroyTime = Random.Range(ConfigManager.doofusDiary.pulpit_data.min_pulpit_destroy_time,
-                                                         ConfigManager.doofusDiary.pulpit_data.max_pulpit_destroy_time);
+            float destroyTime = Random.Range(ConfigManager.doofusDiary.pulpit_data.min_pulpit_destroy_time,ConfigManager.doofusDiary.pulpit_data.max_pulpit_destroy_time);
 
             currentPulpit.GetComponent<TimerUI>().timer = destroyTime;
-            // Destroy the pulpit after the random time
+
             StartCoroutine(DestroyRoutine(currentPulpit, destroyTime));
 
         }
@@ -88,6 +84,7 @@ public class PlatformManager : MonoBehaviour
         while (destroyTimer < destroyDuration)
         {
             destroyTimer += Time.deltaTime;
+            //Shrink out the pulpit while destroying
             pulpit.transform.localScale = Vector3.Lerp(new Vector3(9, 1, 9), Vector3.zero, destroyTimer / destroyDuration);
             yield return new WaitForEndOfFrame();
         }

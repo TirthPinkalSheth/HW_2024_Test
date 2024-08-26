@@ -8,7 +8,7 @@ public class ScoreManager : MonoBehaviour
     public static ScoreManager instance;
 
     public int score = 0;  
-    public TMP_Text scoreText; // UI Text element to display the score
+    public TMP_Text scoreText; //UI text score
 
     private void Awake()
     {
@@ -24,17 +24,17 @@ public class ScoreManager : MonoBehaviour
         }
     }
 
-    // Method to increment score when Doofus successfully moves to a new pulpit
+    // increases the score
     public void AddScore(int points)
     {
         score += points;    
-        UpdateScoreText();  // Updates the UI with the new score
+        UpdateScoreText();
         if (score>=50){
             SceneManager.LoadScene("GameOver");
         }
     }
 
-    // Update the score display on the UI
+    // Updating the score display on the UI
     private void UpdateScoreText()
     {
         if (scoreText != null)
@@ -43,7 +43,7 @@ public class ScoreManager : MonoBehaviour
         }
     }
 
-    // Reset the score at start of new game
+    // Reseting the score at start of new game
     public void ResetScore()
     {
         score = 0;

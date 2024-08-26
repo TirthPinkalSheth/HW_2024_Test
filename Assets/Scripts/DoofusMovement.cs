@@ -6,12 +6,12 @@ public class DoofusMovement : MonoBehaviour
 {
     private float speed;
     private Rigidbody rb;
-    public float fallLimit=-10f;
+    public float fallLimit=-10f;// Y-position threshold for detecting if Doofus has fallen
     public Transform objectToCheck;
     public GameObject currentPulpit;
     void Start()
     {
-        speed = ConfigManager.doofusDiary.player_data.speed;
+        speed = ConfigManager.doofusDiary.player_data.speed;// Retrieves the speed value from the external JSON configuration through the ConfigManager
         rb = GetComponent<Rigidbody>();
     }
 
@@ -31,14 +31,14 @@ public class DoofusMovement : MonoBehaviour
     }
     void LoadNextScene()
     {
-        // Load the game over scene
+        // Loads the game over scene
         SceneManager.LoadScene("GameOver");
     }
     private void OnTriggerEnter(Collider other) {
         if (other.gameObject.CompareTag("Pulpit")){
             if (currentPulpit!=other.gameObject){
                 currentPulpit=other.gameObject;
-                ScoreManager.instance.AddScore(1);
+                ScoreManager.instance.AddScore(1);//Add score by 1
             }
         }
     }

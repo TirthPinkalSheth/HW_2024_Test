@@ -1,6 +1,6 @@
 using UnityEngine;
 using System.IO;
-
+//this file is used to read conents from json file in resources folder
 [System.Serializable]
 public class PlayerData
 {
@@ -18,8 +18,8 @@ public class PulpitData
 [System.Serializable]
 public class DoofusDiary
 {
-    public PlayerData player_data;
-    public PulpitData pulpit_data;
+    public PlayerData player_data;//player related data is stored
+    public PulpitData pulpit_data;//pulpit related data is stored
 }
 
 public class ConfigManager : MonoBehaviour
@@ -33,7 +33,7 @@ public class ConfigManager : MonoBehaviour
 
     void LoadConfig()
     {
-        TextAsset jsonFile = Resources.Load<TextAsset>("doofus_diary");
+        TextAsset jsonFile = Resources.Load<TextAsset>("doofus_diary");// Loads the JSON file named "doofus_diary" from the Resources folder
         doofusDiary = JsonUtility.FromJson<DoofusDiary>(jsonFile.text);
     }
 }
